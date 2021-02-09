@@ -1,14 +1,21 @@
-const listA = ['a', 'b', 'c'];
+const listA = ['a', 'b', 'c', 'd'];
 const listB = [1, 2, 3];
 
 function zipList(list1, list2) {
   const listCombined = [];
   let list1Index = 0;
   let list2Index = 0;
-  let combinedIndex = 0;
-  while (list1Index < list1.length && list2Index < list2.length) {
-    listCombined[combinedIndex++] = list1[list1Index++];
-    listCombined[combinedIndex++] = list2[list2Index++];
+  while (list1Index < list1.length) {
+    listCombined.push(list1[list1Index++]);
+    if (list2Index < list2.length) {
+      listCombined.push(list2[list2Index++]);
+    }
+  }
+
+  if (list2Index < list2.length) {
+    while (list2Index < list2.length) {
+      listCombined.push(list2[list2Index++]);
+    }
   }
   return listCombined;
 }
@@ -16,7 +23,7 @@ function zipList(list1, list2) {
 console.log(zipList(listA, listB));
 
 function zipListTheSimpleWay(list1, list2) {
-  return _.flatten(_.zip(list1, list2));
+  return _.reject(_.flatten(_.zip(list1, list2)), (item) => item === undefined);
 }
 
 console.log(zipListTheSimpleWay(listA, listB));
